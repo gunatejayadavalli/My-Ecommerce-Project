@@ -1,0 +1,245 @@
+<div class="main-content page-m">
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+        
+            <div>
+                <h2>Checkout</h2>
+                <hr>
+                <br>
+            </div>
+
+            <form [formGroup] = "checkoutFormGroup" (ngSubmit)="onSubmit()">
+
+                <div formGroupName="customer" class="form-area">
+
+                    <h3>Customer</h3>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>First Name </label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="firstName" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>Last Name </label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="lastName" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>Email </label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="email" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div formGroupName="shippingAddress" class="form-area">
+                    <h3>Shipping Address</h3>
+                    <div class="row">
+                        
+                        <div class="clearfix"></div>
+                        <div class="col-md-8">
+                            <div class="input-space">
+                                <input formControlName="street" type="text" placeholder="Door No. & Street">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-space">
+                                <input #myPinCode (keyup)="getShippingAddressDetails(myPinCode.value)" formControlName="postalCode" type="text" placeholder="Zip Code / Postal Code">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="clearfix"></div>
+                        <div class="col-md-6">
+                            <div class="input-space">
+                                <select formControlName="locality">
+                                <option *ngFor="let locality of shippingLocalityArray" value="{{locality}}">{{locality}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-space">
+                                <input formControlName="city" type="text" placeholder="City">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-12">
+                            <div class="input-space">
+                                <input formControlName="landmark" type="text" placeholder="Landmark">
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="col-md-6">
+                            <div class="input-space">
+                                <input formControlName="state" type="text" placeholder="State">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-space">
+                                <input formControlName="country" type="text" placeholder="Country">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        
+                    </div>
+                </div>
+
+                <div class="input-space">
+                    <label class="au-checkbox">
+                        <input type="checkbox" (change)="copyShippingAddressToBillingAddress($event)">
+                        <span class="au-checkmark"></span> Billing Address same as Shipping Address
+                    </label>
+                </div>
+
+                <div formGroupName="billingAddress" class="form-area" *ngIf="(!addressSameFlag)">
+                    <h3>Billing Address</h3>
+                    <div class="row">
+                        
+                        <div class="clearfix"></div>
+                        <div class="col-md-8">
+                            <div class="input-space">
+                                <input formControlName="street" type="text" placeholder="Door No. & Street">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-space">
+                                <input #myPinCode (keyup)="getBillingAddressDetails(myPinCode.value)" formControlName="postalCode" type="text" placeholder="Zip Code / Postal Code">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="clearfix"></div>
+                        <div class="col-md-6">
+                            <div class="input-space">
+                                <select formControlName="locality">
+                                <option *ngFor="let locality of billingLocalityArray" value="{{locality}}">{{locality}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-space">
+                                <input formControlName="city" type="text" placeholder="City">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-12">
+                            <div class="input-space">
+                                <input formControlName="landmark" type="text" placeholder="Landmark">
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="col-md-6">
+                            <div class="input-space">
+                                <input formControlName="state" type="text" placeholder="State">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-space">
+                                <input formControlName="country" type="text" placeholder="Country">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        
+                    </div>
+                </div>
+
+                <div formGroupName="creditCard" class="form-area">
+                    <h3>Credit Card</h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-space">
+                                <select formControlName="cardType">
+                                    <option selected>Visa</option>
+                                    <option>Master Card</option>
+                                    <option>Rupay</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="input-space">
+                                <input formControlName="nameOnCard" type="text" placeholder="Name on card">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-8">
+                            <div class="input-space">
+                                <input formControlName="cardNo" type="text" placeholder="Card number">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-space">
+                                <input formControlName="cvv" type="text" placeholder="CVV2 number">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-2"> <label class="date">Expiry Date</label></div>
+                        <div class="col-md-5">
+                            <div class="input-space">
+                                <select formControlName="month">
+                                    <option selected>Month</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                    <option>11</option>
+                                    <option>12</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="input-space">
+                                <select formControlName="year">
+                                    <option selected>Year</option>
+                                    <option>2020</option>
+                                    <option>2021</option>
+                                    <option>2022</option>
+                                    <option>2023</option>
+                                    <option>2024</option>
+                                    <option>2025</option>
+                                    <option>2026</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-area">
+                    <h3>Review Your Order</h3>
+                    <h5 style="font-weight: bold">Total Quantity : {{totalQuantity}}</h5>
+                    <h5 style="font-weight: bold">Shipping : FREE</h5>
+                    <h5 style="font-weight: bold">Total Price : {{totalPrice | currency:'INR'}}</h5>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-info">Purchase</button>
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+</div>

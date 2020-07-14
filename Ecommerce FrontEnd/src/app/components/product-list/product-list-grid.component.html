@@ -1,0 +1,77 @@
+<div class="main-content">
+    <div class="section-content section-content-p30">
+        
+        <div *ngIf="(!searchMode||currentSearchkeyword=='')">
+            <h2>Category : {{currentCatergoryName}}</h2>
+            <hr>
+        </div>
+        <div *ngIf="(searchMode&&currentSearchkeyword!='')">
+            <h2>Search Mode :</h2>
+            <hr>
+        </div>
+
+        <div class = "container-fluid">
+            <div class="row">
+                
+                <div *ngFor="let tempProduct of products" class="col-md-3">
+                    <div class="product-box">
+                        <div style="width: 250px; height: 150px;">
+                        <a routerLink="/products/{{tempProduct.id}}">
+                        <img src="{{tempProduct.imageUrl}}" class="img-responsive" style="max-width: 250px; max-height: 150px;">
+                        </a>
+                        </div>
+                        <div>
+                        <a routerLink="/products/{{tempProduct.id}}">
+                        <h1>{{tempProduct.name}}</h1>
+                        </a>
+                        </div>
+                        <div class="price">{{tempProduct.unitPrice | currency:'INR'}}</div>
+                        <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div *ngIf="products?.length==0" class="alert alert-warning col-md-12" role="alert">
+                    No Products Found.
+                </div>
+
+            </div>
+
+            <!-- Begin Footer -->
+            <div class="footer-pagination">
+                <div class="row">
+                    <div class="col-md-12" style="padding-left: 0%">
+
+                        <div  *ngIf="theTotalElements>thePageSize">
+                            <ngb-pagination [(page)]="thePageNumber"
+                                            [pageSize]="thePageSize"
+                                            [collectionSize]="theTotalElements"
+                                            [maxSize]="10"
+                                            [boundaryLinks]="true"
+                                            (pageChange)="listProducts()">
+                            </ngb-pagination>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12" style="padding-left: 0px;">
+                        <div *ngIf="theTotalElements>0">
+                            <span class="mr-2">Page Size</span>
+                            <select (change)="updatePageSize($event.target.value)">
+                                <option>2</option>
+                                <option selected="true">5</option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>30</option>
+                                <option>50</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Footer -->
+
+        </div>
+    </div>
+</div>
